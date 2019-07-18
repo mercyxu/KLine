@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "BTStockChartViewController.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(100, 200, 100, 100);
+    [btn setTitle:@"K线Demo" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.view addSubview:btn];
+    
+    [btn addTapBlock:^(UIButton *btn) {
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[BTStockChartViewController alloc] init]];
+         [self presentViewController:nav animated:YES completion:nil];
+    }];
+
 }
 
 
