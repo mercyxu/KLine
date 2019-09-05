@@ -403,31 +403,47 @@
 - (void)reloadData
 {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    //    {"tradeType": "3","CoinId": "4","CurrencyId": "19","LineType": 1
-    param[@"tradeType"] = @"3";
-    param[@"LineType"] = self.type;
-    param[@"CoinId"] = @"4";
-    param[@"CurrencyId"] = @"19";
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"Parameters"] = [param mj_JSONString];
+    param[@"type"] = self.type;
+    param[@"market"] = @"btc_usdt";
+    param[@"size"] = @"1000";
     kWeakSelf(self)
-
-    [FDNetworkHelper POST:@"http://43.231.184.237:8008/api/TradeCenter/GetLineData" parameters:params success:^(id responseObject) {
-
-        if (responseObject[@"data"]) {
-            if ([responseObject[@"data"][@"datas"][@"data"] isKindOfClass:[NSNull class]] || [responseObject[@"data"][@"datas"][@"data"] isEqual:[NSNull null]] || responseObject[@"data"][@"datas"][@"data"] == nil) {
-                return ;
-            }
-            Y_KLineGroupModel *groupModel = [Y_KLineGroupModel objectWithArray:responseObject[@"data"][@"datas"][@"data"]];
-            weakself.groupModel = groupModel;
-            [weakself.modelsDict setObject:groupModel forKey:weakself.type];
-            [weakself.lineKView reloadData];
-        }else{
-            NSLog(@"%@",responseObject);
-        }
+    [FDNetworkHelper GET:@"http://api.bitkk.com/data/v1/kline" parameters:param success:^(id responseObject) {
+        
+        Y_KLineGroupModel *groupModel = [Y_KLineGroupModel objectWithArray:responseObject[@"data"]];
+        weakself.groupModel = groupModel;
+        [weakself.modelsDict setObject:groupModel forKey:weakself.type];
+        [weakself.lineKView reloadData];
+        
     } failure:^(NSError *error) {
-
+        
     }];
+    
+//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+//    //    {"tradeType": "3","CoinId": "4","CurrencyId": "19","LineType": 1
+//    param[@"tradeType"] = @"3";
+//    param[@"LineType"] = self.type;
+//    param[@"CoinId"] = @"4";
+//    param[@"CurrencyId"] = @"19";
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    params[@"Parameters"] = [param mj_JSONString];
+//    kWeakSelf(self)
+//
+//    [FDNetworkHelper POST:@"http://43.231.184.237:8008/api/TradeCenter/GetLineData" parameters:params success:^(id responseObject) {
+//
+//        if (responseObject[@"data"]) {
+//            if ([responseObject[@"data"][@"datas"][@"data"] isKindOfClass:[NSNull class]] || [responseObject[@"data"][@"datas"][@"data"] isEqual:[NSNull null]] || responseObject[@"data"][@"datas"][@"data"] == nil) {
+//                return ;
+//            }
+//            Y_KLineGroupModel *groupModel = [Y_KLineGroupModel objectWithArray:responseObject[@"data"][@"datas"][@"data"]];
+//            weakself.groupModel = groupModel;
+//            [weakself.modelsDict setObject:groupModel forKey:weakself.type];
+//            [weakself.lineKView reloadData];
+//        }else{
+//            NSLog(@"%@",responseObject);
+//        }
+//    } failure:^(NSError *error) {
+//
+//    }];
 }
 #pragma mark - Y_StockChartViewDelegate
 
@@ -442,23 +458,23 @@
 -(id)stockDatasWithIndex:(NSInteger)index {
     NSString *type;
     switch (index) {
-        case 0:type = @"1";//@"1min";
+        case 0:type = @"1min";//@"1min";
             break;
-        case 1:type = @"1";//@"1min";
+        case 1:type = @"1min";//@"1min";
             break;
-        case 2:type = @"5";//@"5m";
+        case 2:type = @"5min";//@"5m";
             break;
-        case 3:type = @"15";//@"15m";
+        case 3:type = @"15min";//@"15m";
             break;
-        case 4:type = @"30";//
+        case 4:type = @"30min";//
             break;
-        case 5:type = @"60";//@"1min";
+        case 5:type = @"1hour";//@"1";
             break;
-        case 6:type = @"1440";//@"5min";
+        case 6:type = @"1day";//@"";
             break;
-        case 7:type = @"10080";//@"1week";
+        case 7:type = @"1week";//@"1week";
             break;
-        case 8:type = @"43200";//@"1month";
+        case 8:type = @"1month";//@"1month";
             break;
         default:
             break;
