@@ -180,4 +180,6 @@
 
 + (NSString *)depthStrPriceWithPrice:(CGFloat)price Count:(NSInteger)count;
 
++ (id)getLocalJsonDataWithFileName:(NSString *)finalPath;
+
 @end

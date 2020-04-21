@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		69348BED89417A19BC7D455E /* libPods-KLineDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 213A3B90F650AE94C6D8EFCB /* libPods-KLineDemo.a */; };
+		6D5F3D2F244EC6EC0064E258 /* KLineLocalJsonData.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D5F3D2E244EC6EC0064E258 /* KLineLocalJsonData.json */; };
 		819BB92222E013330039A34B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 819BB92122E013330039A34B /* AppDelegate.m */; };
 		819BB92522E013330039A34B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 819BB92422E013330039A34B /* ViewController.m */; };
 		819BB92A22E013350039A34B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 819BB92922E013350039A34B /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		213A3B90F650AE94C6D8EFCB /* libPods-KLineDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KLineDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D5F3D2E244EC6EC0064E258 /* KLineLocalJsonData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = KLineLocalJsonData.json; sourceTree = "<group>"; };
 		819BB91D22E013330039A34B /* KLineDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KLineDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		819BB92022E013330039A34B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		819BB92122E013330039A34B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		819BB91F22E013330039A34B /* KLineDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6D5F3D2E244EC6EC0064E258 /* KLineLocalJsonData.json */,
 				819BB9D522E014330039A34B /* Other */,
 				819BB93622E0135B0039A34B /* KLine */,
 				819BB92022E013330039A34B /* AppDelegate.h */,
@@ -596,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				819BB92D22E013350039A34B /* LaunchScreen.storyboard in Resources */,
+				6D5F3D2F244EC6EC0064E258 /* KLineLocalJsonData.json in Resources */,
 				819BB92A22E013350039A34B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
