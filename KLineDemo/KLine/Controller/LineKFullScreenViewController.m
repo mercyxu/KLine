@@ -406,6 +406,18 @@
     param[@"type"] = self.type;
     param[@"market"] = @"btc_usdt";
     param[@"size"] = @"1000";
+    
+    // 使用本地数据显示K线
+    BOOL useLocalData = NO;
+    if ( useLocalData ) {
+        NSArray *responseObject = [Util getLocalJsonDataWithFileName:@"KLineLocalJsonData.json"];
+        Y_KLineGroupModel *groupModel = [Y_KLineGroupModel objectWithArray:responseObject];
+        self.groupModel = groupModel;
+        [self.modelsDict setObject:groupModel forKey:self.type];
+        [self.lineKView reloadData];
+        return;
+    }
+    
     kWeakSelf(self)
     [FDNetworkHelper GET:@"http://api.bitkk.com/data/v1/kline" parameters:param success:^(id responseObject) {
         

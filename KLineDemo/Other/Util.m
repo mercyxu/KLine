@@ -482,4 +482,17 @@
     }
 }
 
+
++ (id)getLocalJsonDataWithFileName:(NSString *)finalPath {
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:finalPath withExtension:@""];
+    NSData *json = [NSData dataWithContentsOfURL:url];
+    if (json) {
+        NSError *err = nil;
+        NSDictionary *filters = [NSJSONSerialization JSONObjectWithData:json
+                                                                options:NSJSONReadingAllowFragments error:&err];
+        return filters;
+    }
+    return nil;
+}
 @end

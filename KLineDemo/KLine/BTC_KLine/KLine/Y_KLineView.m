@@ -433,6 +433,17 @@
         if(ABS(oldPositionX - location.x) < ([Y_StockChartGlobalVariable kLineWidth] + [Y_StockChartGlobalVariable kLineGap])/2){
             return;
         }
+        
+        // 震动反馈
+        if( UIGestureRecognizerStateChanged == longPress.state ) {
+            if (@available(iOS 10.0, *)) {
+                UIImpactFeedbackGenerator *impactLight = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+                [impactLight impactOccurred];
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        
         //暂停滑动
         self.scrollView.scrollEnabled = NO;
         oldPositionX = location.x;
