@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "XXBitcoinDetailVC.h"
+#import "BTStockChartViewController.h"
 
 @interface ViewController ()
 
@@ -22,14 +22,14 @@
     btn.frame = CGRectMake(100, 200, 100, 100);
     [btn setTitle:@"K线Demo" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(BitcoinDetail) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    
+    [btn addTapBlock:^(UIButton *btn) {
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[BTStockChartViewController alloc] init]];
+         [self presentViewController:nav animated:YES completion:nil];
+    }];
+
 }
 
-- (void)BitcoinDetail
-{
-    XXBitcoinDetailVC *vc = [[XXBitcoinDetailVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
 
 @end
