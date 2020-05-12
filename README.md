@@ -17,8 +17,4 @@
 
 ![Image text](https://github.com/mercyxu/KLine/blob/master/WechatIMG5.jpeg)
 
-如果有帮到你，节约你不少时间，可以请我喝一杯咖啡☕️
 
-![Image text](https://github.com/mercyxu/KLine/blob/master/WechatIMG8.jpeg)
-
-![Image text](https://github.com/mercyxu/KLine/blob/master/WechatIMG9.jpeg)
