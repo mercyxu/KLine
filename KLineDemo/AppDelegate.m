@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "XXTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -26,17 +26,58 @@
     if (@available(iOS 11.0, *)){
         [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
     }
-    ViewController *vc = [[ViewController alloc] init];
-    self.window.rootViewController = vc;
+    
+    // 0. 读取市场数据
+    [KMarket readCachedDataOfMarket];
+
+    // 2. 加载汇率数据
+    [[RatesManager sharedRatesManager] loadDataOfRates];
+    
+    self.window.rootViewController = [[XXTabBarController alloc] init];
     return YES;
 }
 
+#pragma mark - 4. 程序激活
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    
+     KSystem.isActive = YES;
+    
+    // 1. 打开行情长连接
+    [KQuoteSocket openWebSocket];
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    // 2. 判断是否登录打开用户长连接
+
+    // 3. 刷新币对列表
+    [KMarket loadDataOfSymbols];
 }
 
+#pragma mark - 5. 程序暂行
+- (void)applicationWillResignActive:(UIApplication *)application {
+    
+    KSystem.isActive = NO;
+    
+    // 1. 关闭行情长连接
+    [KQuoteSocket closeWebSocket];
+
+    // 2. 关闭用户组长连接
+
+    // 3. 取消定时刷新任务
+    [KMarket cancelTimer];
+}
+
+#pragma mark - 6. 程序意外暂行
+- (void)applicationWillTerminate:(UIApplication *)application {
+    
+     KSystem.isActive = NO;
+    
+    // 1. 关闭行情长连接
+    [KQuoteSocket closeWebSocket];
+
+    // 2. 关闭用户组长连接
+    
+    // 3. 取消定时刷新任务
+    [KMarket cancelTimer];
+}
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
@@ -46,16 +87,6 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 

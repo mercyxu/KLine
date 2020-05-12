@@ -1,72 +1,192 @@
 //
-//  Bitbt.pch
-//  Bitbt
+//  PrefixHeader.pch
+//  iOS
 //
-//  Created by 徐俊 on 2018/5/21.
-//  Copyright © 2018年 Bitbt. All rights reserved.
+//  Created by iOS on 2018/6/10.
+//  Copyright © 2018年 iOS. All rights reserved.
 //
 
-#ifndef Bitbt_pch
-#define Bitbt_pch
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
 
-#ifdef __OBJC__
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
-#import <MBProgressHUD.h>
-#import <Masonry.h>
-#import <MJExtension.h>
-#import <SocketRocket.h>
-#import "FDNetworkHelper.h"
-#import "CommonMethod.h"
-#import "UIView+Extension.h"
-#import "UIButton+ImageTitleSpacing.h"
-#import "NSString+WH.h"
-#import "UILabel+TextSpace.h"
-#import "UIButton+WHButton.h"
-#import "Util.h"
-//推送
-#define URL_pushMain @"ws://43.231.184.237:8004"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-#define kApplication        [UIApplication sharedApplication]
-#define kAppWindow          [UIApplication sharedApplication].delegate.window
-#define kAppDelegate        [AppDelegate shareAppDelegate]
+typedef NS_ENUM(NSUInteger, NetworkMethod) {
+    Get = 0,
+    Post
+};
 
-#define BTLanguage(text) NSLocalizedString(text, nil)
-#define RGBA(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
-#define RGB(r,g,b) RGBA(r, g, b, 1)
-#define DEFAULT_FONT_NAME @"PingFangSC-Regular"
-#define FONT_WITH_SIZE(fontSize) [UIFont fontWithName:DEFAULT_FONT_NAME size:(fontSize)]
-#define BOLDSYSTEMFONT(FONTSIZE)[UIFont boldSystemFontOfSize:FONTSIZE]
-#define IMAGE_NAMED(name) [UIImage imageNamed:name]
-#define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
-#define kNavBarHeight 44.0
-#define SafeAreaTopHeight ((KScreenHeight >= 812.0) && [[UIDevice currentDevice].model isEqualToString:@"iPhone"] ? 24 : 0)
-#define SafeAreaBottomHeight ((KScreenHeight >= 812.0) && [[UIDevice currentDevice].model isEqualToString:@"iPhone"]  ? 34 : 0)
-#define SafeKLineBottomHeight ((KScreenHeight >= 812.0) && [[UIDevice currentDevice].model isEqualToString:@"iPhone"]  ? 15 : 0)
-#define kTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
-#define kTopHeight (kStatusBarHeight + kNavBarHeight)
+#import "MBProgressHUD+Add.h"
+#import <MJExtension/MJExtension.h>
 
-//获取屏幕宽高
-#define KScreenWidth ([[UIScreen mainScreen] bounds].size.width)
-#define KScreenHeight [[UIScreen mainScreen] bounds].size.height
-#define kScreen_Bounds [UIScreen mainScreen].bounds
+#import "XXNavigationController.h"
+#import "XXCategory.h"
+#import "XXKit.h"
+#import "XXFontHeader.h"
+#import "XXQuoteSocket.h"
+#import "HttpManager.h" // 网络请求工具管理
+#import "XXTradeData.h" // 交易数据
+#import "XXMarketData.h" // 市场数据
+#import "RatesManager.h" // 汇率管理
+#import "NotificationManager.h" // 通知管理
+#import "XXSystem.h"
+#import "XXSegmentView.h"
+#import "KSymbolDetailData.h"
+#import "XXDecimalNumberHelper.h"
+#import "LocalizeHelper.h" //国际化
 
-//强弱引用
-#define kWeakSelf(type)  __weak typeof(type) weak##type = type;
-#define kStrongSelf(type) __strong typeof(type) type = weak##type;
+#define KWeakSelf __weak typeof(self) weakSelf = self;
 
-//拼接字符串
-#define NSStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
+#define kServerUrl @"https://www.asproex.com/"
+#define kSocketQuoteUrl @"wss://ws.asproex.com/ws/quote/v1"
 
-#define HexRGB(rgbValue) \
-[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
-blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define kApp_Name [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]
+#define kGTID @"" // 极验场景id
 
-#define HexRGBA(rgbValue,alp) \
-[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
-blue:((float)(rgbValue & 0xFF))/255.0 alpha:alp]
+#define kScreen_Height [UIScreen mainScreen].bounds.size.height
+#define kScreen_Width [UIScreen mainScreen].bounds.size.width
+#define kStatusBarHeight [UIApplication sharedApplication].statusBarFrame.size.height
+#define kNavNormalHeight (CGRectGetMaxY([UIApplication sharedApplication].statusBarFrame) + 44)
+#define kNavHeight (CGRectGetMaxY([UIApplication sharedApplication].statusBarFrame) + 68)
+#define kNavBigHeight (CGRectGetMaxY([UIApplication sharedApplication].statusBarFrame) + 132)
+#define kNavShadowHeight 12 // 导航栏阴影完全显示出来的滚动高度
+#define DepthMapLineWidth 1 // 深度图线条宽度
+#define KLine_Height 1 // 分割线的高度
+#define KLeftSpace_20 (K375(24))
+#define kLeftSpace_70 72
 
+#define KString(str) (str) == nil ? @"" : [NSString stringWithFormat:@"%@",(str)]
+#define Kscal(value) ((kScreen_Width/1242)*(value))
+#define K375(value) ((kScreen_Width/375)*(value))
+#define KSpacing ((kScreen_Width/375)*(15))
+
+/** 是否夜间模式 */
+#define kIsNight 1
+
+// 系统是否深色模式
+#define KIsDarkModel ((@available(iOS 13.0, *) && UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) ? YES : NO)
+
+/** 状态栏的状态 */
+#define KStatusBarStyleDefault (KUser.isNightType ? KStatusBarWhiteStyle : KStatusBarDarkStyle)
+#define KStatusBarWhiteStyle (KIsDarkModel ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent)
+#define KStatusBarDarkStyle (KIsDarkModel ? UIStatusBarStyleDarkContent : UIStatusBarStyleDefault)
+
+#define RGBColor(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
+#define KRGBA(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a/100.0]
+
+#define KWindow [UIApplication sharedApplication].keyWindow
+#define BH_IS_IPHONE_5 ([UIScreen mainScreen].nativeBounds.size.height == 1136)
+#define BH_IS_IPHONE_6 ([UIScreen mainScreen].nativeBounds.size.height == 1334)
+#define BH_IS_IPHONE_6P ([UIScreen mainScreen].nativeBounds.size.height == 2208 || [UIScreen mainScreen].nativeBounds.size.height == 1920)
+#define BH_IS_IPHONE_X ([UIScreen mainScreen].nativeBounds.size.height == 2436 || [UIScreen mainScreen].nativeBounds.size.height == 1792 || [UIScreen mainScreen].nativeBounds.size.height == 2688)
+#define kTabbarHeight (BH_IS_IPHONE_X ? 83 : 59)
+#define TradeDepthHeight 64.5 // 交易盘口的高度
+#define UILabel_Line_Space 5.0f
+#define UILabel_Text_Space 0.2f
+
+#pragma mark - 数据
+// 数据
+#define KUser [UserData sharedUserData]
+#define KSystem [XXSystem sharedXXSystem]
+#define KTrade [XXTradeData sharedXXTradeData]
+#define KMarket [XXMarketData sharedXXMarketData]
+#define KConfigure [XXConfiguration sharedXXConfiguration]
+#define KQuoteSocket [XXQuoteSocket sharedXXQuoteSocket]
+#define KUserSocket [XXUserSocket sharedXXUserSocket]
+#define App_Delegate (AppDelegate *)[[UIApplication sharedApplication] delegate]
+#define BHUserDefaults [NSUserDefaults standardUserDefaults]
+#define KAccountData [XXAccountData sharedXXAccountData]
+#define KIndexModel [XXIndexModules sharedXXIndexModules]
+#define KDetail [KSymbolDetailData sharedKSymbolDetailData]
+#define KDecimal XXDecimalNumberHelper
+#define KOtcData [OTCData sharedOTCData]
+
+#define KNavigation_BackgroundColor (kWhite100)
+#define KNavigationBar_TitleColor  (kDark100)
+#define kViewBackgroundColor (kWhite100)
+// 分隔线颜色
+#define KLine_Color (kIsNight ? KRGBA(27,43,63,100) : KRGBA(36,43,50,5))
+#define KBigLine_Color (kIsNight ? KRGBA(8,23,36,100) : KRGBA(36,43,50,5))
+
+// 主颜色【一级主色调】
+#define kBlue100   kIsNight ? KRGBA(50,117,224,100) : KRGBA(50,117,224,100)
+#define kBlue80   kIsNight ? KRGBA(50,117,224,80) : KRGBA(50,117,224,80)
+#define kBlue50   kIsNight ? KRGBA(50,117,224,50) : KRGBA(50,117,224,50)
+#define kBlue20   kIsNight ? KRGBA(50,117,224,20) : KRGBA(50,117,224,20)
+#define kBlue10   kIsNight ? KRGBA(50,117,224,10) : KRGBA(50,117,224,10)
+#define kBlue5   kIsNight ? KRGBA(50,117,224,5) : KRGBA(50,117,224,5)
+
+// 主色调【蓝色】背景下的字体颜色
+#define kMainTextColor [UIColor whiteColor]
+
+// 辅助颜色【二级主色调】
+#define kOrange100   kIsNight ? KRGBA(255,190,0,100) : KRGBA(255,143,0,100)
+#define kOrange80   kIsNight ? KRGBA(255,190,0,80) : KRGBA(255,143,0,80)
+#define kOrange50   kIsNight ? KRGBA(255,190,0,50) : KRGBA(255,143,0,50)
+#define kOrange20   kIsNight ? KRGBA(255,190,0,20) : KRGBA(255,143,0,20)
+#define kOrange10   kIsNight ? KRGBA(255,190,0,10) : KRGBA(255,143,0,10)
+#define kOrange5   kIsNight ? KRGBA(255,190,0,5) : KRGBA(255,143,0,5)
+
+// 字体颜色
+#define kDark100   kIsNight ? KRGBA(207,210,233,100) : KRGBA(34,43,51,100)
+#define kDark80   kIsNight ? KRGBA(207,210,233,80) : KRGBA(34,43,51,80)
+#define kDark50   kIsNight ? KRGBA(110,134,168,100) : KRGBA(34,43,51,50)
+#define kDark20   kIsNight ? KRGBA(207,210,233,20) : KRGBA(34,43,51,20)
+#define kDark10   kIsNight ? KRGBA(207,210,233,10) : KRGBA(34,43,51,10)
+#define kDark5   kIsNight ? KRGBA(207,210,233,5) : KRGBA(34,43,51,5)
+
+// 背景颜色
+#define kWhite100   kIsNight ? KRGBA(19,31,47,100) : KRGBA(255,255,255,100)
+#define kWhite80   kIsNight ? KRGBA(19,31,47,80) : KRGBA(255,255,255,80)
+#define kWhite50   kIsNight ? KRGBA(19,31,47,50) : KRGBA(255,255,255,50)
+#define kWhite20   kIsNight ? KRGBA(19,31,47,20) : KRGBA(255,255,255,20)
+#define kWhite10   kIsNight ? KRGBA(19,31,47,10) : KRGBA(255,255,255,10)
+#define kWhite5   kIsNight ? KRGBA(19,31,47,5) : KRGBA(255,255,255,5)
+
+// 涨颜色
+#define kGreen100  kIsNight ? KRGBA(1,172,143,100) : KRGBA(1,172,143,100)
+#define kGreen80   kIsNight ? KRGBA(1,172,143,80) : KRGBA(1,172,143,80)
+#define kGreen50   kIsNight ? KRGBA(1,172,143,50) : KRGBA(1,172,143,50)
+#define kGreen20   kIsNight ? KRGBA(1,172,143,20) : KRGBA(1,172,143,20)
+#define kGreen10   kIsNight ? KRGBA(1,172,143,10) : KRGBA(1,172,143,10)
+#define kGreen5    kIsNight ? KRGBA(1,172,143,5) : KRGBA(1,172,143,5)
+
+// 跌颜色
+#define kRed100   kIsNight ? KRGBA(209,76,99,100) : KRGBA(209,76,99,100)
+#define kRed80    kIsNight ? KRGBA(209,76,99,80) : KRGBA(209,76,99,80)
+#define kRed50    kIsNight ? KRGBA(209,76,99,50) : KRGBA(209,76,99,50)
+#define kRed20    kIsNight ? KRGBA(209,76,99,20) : KRGBA(209,76,99,20)
+#define kRed10    kIsNight ? KRGBA(209,76,99,10) : KRGBA(209,76,99,10)
+#define kRed5     kIsNight ? KRGBA(209,76,99,5) : KRGBA(209,76,99,5)
+
+static inline BOOL IsEmpty(id thing) {
+    return thing == nil || [thing isEqual:[NSNull null]]
+    || ([thing respondsToSelector:@selector(length)]
+        && [(NSData *)thing length] == 0)
+    || ([thing respondsToSelector:@selector(count)]
+        && [(NSArray *)thing count] == 0);
+}
+
+#define ISDictionary(object) (object != nil && [object isKindOfClass:[NSDictionary class]])
+
+#if TARGET_IPHONE_SIMULATOR
+#define SIMULATOR_TEST
+#else
 #endif
 
-#endif /* Bitbt_pch */
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+
+//#define NSLog(FORMAT, ...) fprintf(stderr, "%s:%zd\t%s\n", [[[NSString stringWithUTF8String: __FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat: FORMAT, ## __VA_ARGS__] UTF8String]);
+
+#else
+#define NSLog(...)
+#endif
+
+#endif /* PrefixHeader_pch */
+
+
