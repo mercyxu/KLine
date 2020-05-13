@@ -9,12 +9,15 @@
 
 交流群 610200830
 
-![image](https://github.com/mercyxu/KLine/blob/master/WechatIMG1.jpeg)
+![image](https://github.com/mercyxu/KLine/blob/master/Image/WechatIMG1.jpeg)
 
-![Image text](https://github.com/mercyxu/KLine/blob/master/WechatIMG2.jpeg)
+![Image text](https://github.com/mercyxu/KLine/blob/master/Image/WechatIMG2.jpeg)
 
-![Image text](https://github.com/mercyxu/KLine/blob/master/WechatIMG4.jpeg)
+![Image text](https://github.com/mercyxu/KLine/blob/master/Image/WechatIMG4.jpeg)
 
-![Image text](https://github.com/mercyxu/KLine/blob/master/WechatIMG5.jpeg)
+![Image text](https://github.com/mercyxu/KLine/blob/master/Image/WechatIMG5.jpeg)
 
 
+如果觉得不错，帮助到了你，可以请我喝一杯咖啡~~
+
+![image](https://github.com/mercyxu/KLine/blob/master/Image/WechatIMG8.jpeg)
